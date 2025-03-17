@@ -74,16 +74,17 @@ function GMXInterface() {
 
   const handleCryptoSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery) return;
+    if (!searchQuery.trim()) return;
 
     setLoading(true);
     setError(null);
     
     try {
       const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${searchQuery.toLowerCase()}?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true`
+        `https://api.coingecko.com/api/v3/coins/${searchQuery.toLowerCase().trim()}?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true`
       );
       setCryptoInfo(response.data);
+      setError(null);
     } catch (error) {
       setError("Cryptocurrency not found or API error. Please try again.");
       setCryptoInfo(null);
